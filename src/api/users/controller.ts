@@ -35,9 +35,11 @@ export async function createUser(user: User): Promise<any> {
 
 export async function fetchUserFrames(address: string) {
   try {
-    const projection = { frames: 1 };
+    const projection = { frames: 1, walletAddress: 1 };
     console.log('Searching for user with wallet address:', address);
-    const user = await (await database()).collection('users').findOne({ walletAddress: address }, { projection });
+    const user = await (await database())
+      .collection('users')
+      .findOne({ walletAddress: address.trim() }, { projection });
     console.log('User found:', user);
     if (!user) {
       throw {
