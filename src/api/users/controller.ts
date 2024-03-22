@@ -56,3 +56,36 @@ export async function fetchUserFrames(address: string) {
     };
   }
 }
+
+export async function addFrames(address: string, payload: string) {
+  try {
+    const user = await (await database()).collection('users').findOne({ walletAddress: address });
+    if (!user) {
+      throw {
+        message: 'User not found',
+        status: 404,
+      };
+    }
+
+    let newFrames = [];
+    newFrames = user.frames;
+    newFrames.push(payload);
+
+    console.log(address);
+
+    await (await database()).collection('users').updateOne({ _id: user._id }, { $set: { frames: newFrames } });
+
+    return {
+      data: newFrames,
+      bool: true,
+      message: 'Success, User created.',
+      status: 200,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      message: 'Unauthorized Access',
+      status: 401,
+    };
+  }
+}
