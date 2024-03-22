@@ -3,9 +3,7 @@ import LoggerInstance from '../../loaders/logger';
 import User from './model';
 
 export async function createUser(user: User): Promise<any> {
-  const userExists = await (await database())
-    .collection('users')
-    .findOne({ 'wallets.primary_wallet': user.walletAddress });
+  const userExists = await (await database()).collection('users').findOne({ walletAddress: user.walletAddress });
   if (userExists) {
     throw {
       bool: false,
@@ -15,11 +13,9 @@ export async function createUser(user: User): Promise<any> {
   } else {
     try {
       user.username = '';
-      user.wallets = {
-        primary_wallet: user.walletAddress,
-      };
+
       user.frames = [];
-      delete user.walletAddress;
+
       await (await database()).collection('users').insertOne(user);
       return {
         bool: true,
@@ -37,13 +33,11 @@ export async function createUser(user: User): Promise<any> {
   }
 }
 
-export async function fetchUserFrames(walletAddress: string) {
+export async function fetchUserFrames(address: string) {
   try {
     const projection = { frames: 1 };
-    console.log('Searching for user with wallet address:', walletAddress);
-    const user = await (await database())
-      .collection('users')
-      .findOne({ wallets: { primary_wallet: walletAddress.toString() } }, { projection });
+    console.log('Searching for user with wallet address:', address);
+    const user = await (await database()).collection('users').findOne({ walletAddress: address }, { projection });
     console.log('User found:', user);
     if (!user) {
       throw {

@@ -29,7 +29,7 @@ async function handleFetchUserFrames(req: Request, res: Response) {
   try {
     const walletAddress = req.params.walletAddress;
     console.log(walletAddress);
-    const user = await fetchUserFrames(walletAddress);
+    const user = await fetchUserFrames(walletAddress.toString());
     res.status(200).json({
       message: 'Success',
       data: user,
