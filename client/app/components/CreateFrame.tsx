@@ -31,7 +31,7 @@ const CreateFrameModal: React.FC<CreateFrameModalProps> = ({ visible, onClose })
     <div
       id="container"
       onClick={handleOnClose}
-      className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
+      className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
     >
       <div className="mb-3 w-96 p-8 flex flex-col gap-8 bg-white">
         <p className="mb-2 inline-block text-black font-bold text-xl">Create Frame</p>
@@ -89,9 +89,9 @@ const CreateFrame: React.FC = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen w-screen">
         <button
-          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
           onClick={() => setShowModal(true)}
         >
           Create Frame
