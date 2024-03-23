@@ -1,9 +1,98 @@
-import CreateFrame from '../components/CreateFrame';
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import homeImage from '../../public/homeImage.jpg';
+import defaultImageIcon from '../../public/default-image-icon.jpg';
 
-export default function home() {
+export default function Home() {
+  const [file, setFile] = useState<string | undefined>(undefined);
+  const [buttons, setButtons] = useState<string[]>([]);
+  const [buttonOptions, setButtonOptions] = useState<string[]>(['Post', 'Post Redirect', 'Link']);
+  const [showButtonOptions, setShowButtonOptions] = useState<boolean>(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const addNewButton = (option: string) => {
+    if (buttons.length < 4) {
+      setButtons([...buttons, option]);
+      setShowButtonOptions(false);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center">
-      <CreateFrame />
+    <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
+      <div className="flex items-stretch justify-center">
+        <div className="flex-1 bg-[#fdf3ea] py-10 pl-20">
+          <p className="font-mono text-[#291e62] text-6xl font-bold">LET'S START </p>
+          <p className="font-mono text-[#291e62] text-6xl font-bold">CREATING FRAMES</p>
+          <p className="font-mono text-[#291e62] text-3xl font-normal mt-14">How about creating a frame?</p>
+          <div className="w-[600px] h-[400px] relative mt-10">
+            <Image src={homeImage} alt="" layout="fill" objectFit="cover" />
+          </div>
+        </div>
+        <div className="flex flex-col w-1/2 items-center bg-[#f2d054] py-10 pl-20 ">
+          <p className="mb-8 font-bold text-[#291e62] text-2xl">Upload Image</p>
+          <div className="border border-gray-300 rounded-lg w-[300px] h-[200px] relative">
+            <img
+              src={file || (defaultImageIcon.src as string)}
+              alt="Default Image"
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-5 mt-4">
+            {buttons.map((button, index) => (
+              <button
+                key={index}
+                className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                {button}
+              </button>
+            ))}
+          </div>
+          <span className="pt-10">
+            <input
+              className="relative m-0 block min-w-0 flex-auto rounded border border-solid border-gray-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+              type="file"
+              id="formFile"
+              onChange={handleChange}
+            />
+          </span>
+
+          {showButtonOptions && buttons.length < 4 && (
+            <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
+              {buttonOptions.map((option, index) => (
+                <button
+                  key={index}
+                  className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                  onClick={() => addNewButton(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+          {!showButtonOptions && buttons.length < 4 && (
+            <div className="mt-10">
+              <button
+                className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
+                onClick={() => setShowButtonOptions(true)}
+              >
+                Add button to frame
+              </button>
+            </div>
+          )}
+          <button
+            type="button"
+            className="mt-20 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
+          >
+            Create Frame
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
