@@ -1,5 +1,10 @@
-import Image from 'next/image';
+'use client';
+import Landingpage from './components/landing/LandingPage';
 
-export default function Home() {
-  return <div></div>;
+export default function RootPage(): JSX.Element {
+  return (
+    <div>
+      <Landingpage />
+    </div>
+  );
 }
