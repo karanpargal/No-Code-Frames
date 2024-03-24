@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import Image from 'next/image';
 import LandingImage from '../../assets/LandingImage.png';
@@ -35,11 +34,11 @@ const Landingpage = (): JSX.Element => {
 
         <div className="flex justify-between px-20 items-center m-auto mt-28 text-gray-900   ">
           <div className="flex flex-col gap-y-6  w-max">
-            <h1 className="text-5xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+            <h1 className="text-5xl font-bold">Empower Your Creativity with Customizable Frames on Warpcaster.</h1>
             <p className="text-3xl font-normal text-emrald-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elite
+              Craft Engaging Experiences with Images, Videos, Buttons, and More!
             </p>
-            <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elite</p>
+            <p className="text-xl font-semibold">Start Building Your Unique Frame Now</p>
             <Link href="/dashboard/home">
               <button className="relative inline-block px-4 py-2 font-medium group">
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>

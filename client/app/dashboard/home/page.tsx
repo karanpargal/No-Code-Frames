@@ -20,7 +20,7 @@ export default function Home() {
   const [uploading, setUploading] = useState(false);
   const { address } = useAccount();
   const [buttons, setButtons] = useState<ButtonData[]>([]);
-  const [buttonOptions, setButtonOptions] = useState<string[]>(['Post', 'Post Redirect', 'Link']);
+  const [buttonOptions, setButtonOptions] = useState<string[]>(['post', 'Post Redirect', 'link']);
   const [inputText, setInputText] = useState<string>('');
   const [postUrl, setPostUrl] = useState<string>('http://localhost:3000/api/frames/renderFrame');
   const [showInputText, setShowInputText] = useState<boolean>(false);
@@ -81,6 +81,7 @@ export default function Home() {
       });
 
       console.log(res);
+      toast.success('Frame created successfully');
       setUploading(false);
     } catch (error) {
       console.error('Error creating frame:', error);
@@ -147,7 +148,7 @@ export default function Home() {
           </div>
           {address ? (
             <div className="flex flex-col w-1/2 items-start py-10 pl-20 gap-y-4 border-l-2">
-              <p className="mb-4 font-bold text-gray-900 text-2xl">Upload Image</p>
+              <p className="mb-4 font-bold text-gray-900 text-2xl">Upload Image / Video</p>
               <div className="border border-gray-300 rounded-lg w-[300px] h-[200px] relative">
                 <img
                   src={file || (defaultImageIcon.src as string)}
