@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import homeImage from '../../../public/homeImage.jpg';
 import defaultImageIcon from '../../../public/default-image-icon.jpg';
@@ -28,7 +28,14 @@ export default function Home() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(URL.createObjectURL(e.target.files[0]));
+      const fileType = e.target.files[0].type;
+      if (fileType.startsWith('image')) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+      } else if (fileType.startsWith('video')) {
+        setFile(undefined); // Clear the file state
+      } else {
+        alert('Unsupported file type. Please upload an image or a video.');
+      }
     }
   };
 
@@ -81,20 +88,6 @@ export default function Home() {
       alert('Failed to create frame. Please try again.');
     }
   };
-
-  useEffect(() => {
-    if (address) {
-      axios
-        .post('http://localhost:3000/api/users/signUp', { walletAddress: address })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error signing up:', error);
-          alert(error);
-        });
-    }
-  }, [address]);
 
   // const uploadFile = async (fileToUpload: File) => {
   //   try {
@@ -248,23 +241,22 @@ export default function Home() {
                   </button>
                 </div>
               )}
-
-              {!showButtonOptions && buttons.length < 4 && (
-                <div className=" flex gap-x-4">
+              <div className=" flex gap-x-4">
+                {!showButtonOptions && buttons.length < 4 && file && (
                   <button
-                    className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
+                    className=" bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium text-lg px-5 py-2.5 text-center"
                     onClick={() => setShowButtonOptions(true)}
                   >
                     Add button to frame
                   </button>
-                  <button
-                    className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
-                    onClick={() => setShowInputText(true)}
-                  >
-                    Add Input to frame
-                  </button>
-                </div>
-              )}
+                )}
+                <button
+                  className="bg-white text-black hover:bg-black hover:text-white border-2 border-black transition-all duration-300  hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium  text-lg px-5 py-2.5 text-center"
+                  onClick={() => setShowInputText(true)}
+                >
+                  Add Input to frame
+                </button>
+              </div>
               <input
                 type="text"
                 placeholder="Enter Custom Post URL"
@@ -272,19 +264,19 @@ export default function Home() {
                 onChange={e => setPostUrl(e.target.value)}
               />
               <small className="text-zinc-600 text-xs ">If not provided, the data will be posted to the default</small>
-              <button
-                type="button"
-                className=" text-white bg-blue-500 hover:bg-blue-700 hover:scale-110 duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
-                onClick={() => handleCreateFrame()}
-              >
-                Create Frame
+
+              <button className="relative inline-block px-4 py-2 font-medium group" onClick={() => handleCreateFrame()}>
+                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+                <span className="relative text-black group-hover:text-white">Create Frame</span>
               </button>
+
               {/* <button disabled={uploading} onClick={() => inputFile.current?.click()}>
               {uploading ? 'Uploading...' : 'Upload'}
             </button> */}
             </div>
           ) : (
-            <div className="flex flex-col w-1/2 items-start bg-[#f2d054] py-10 pl-20 gap-y-4">
+            <div className="flex flex-col w-1/2 items-start py-10 pl-20 gap-y-4">
               <ConnectButton />
             </div>
           )}
