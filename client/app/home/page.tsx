@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import homeImage from '../../public/homeImage.jpg';
 import defaultImageIcon from '../../public/default-image-icon.jpg';
+import axios from 'axios';
 
 interface ButtonData {
   label: string;
@@ -14,6 +15,8 @@ export default function Home() {
   const [file, setFile] = useState<string | undefined>(undefined);
   const [buttons, setButtons] = useState<ButtonData[]>([]);
   const [buttonOptions, setButtonOptions] = useState<string[]>(['Post', 'Post Redirect', 'Link']);
+  const [inputText, setInputText] = useState<string>('');
+  const [postUrl, setPostUrl] = useState<string>('http://localhost:3000/api/frames/renderFrame');
   const [showInputText, setShowInputText] = useState<boolean>(false);
   const [showButtonOptions, setShowButtonOptions] = useState<boolean>(false);
 
@@ -30,19 +33,20 @@ export default function Home() {
     }
   };
 
-  const handleCreateFrame = () => {
-    const framesButton = buttons.map(button => {
-      return {
-        label: button,
-        action: 'POST',
-        target: 'https://www.google.com',
-      };
+  const handleCreateFrame = async () => {
+    const res = await axios.post('http://localhost:3000/api/frames/createFrame', {
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
+      buttons: buttons ? buttons : [],
+      inputText: inputText,
+      post_url: postUrl,
+      walletAddress: '0xAcEf0600cF20d5236111cCeE4Ce54013C9123e62',
     });
+    console.log(res);
   };
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
-      <div className="flex items-stretch justify-center">
+      <div className="flex justify-center items-stretch">
         <div className="flex-1 bg-[#fdf3ea] py-10 pl-20">
           <p className="font-mono text-[#291e62] text-6xl font-bold">LET&apos;S START </p>
           <p className="font-mono text-[#291e62] text-6xl font-bold">CREATING FRAMES</p>
@@ -51,7 +55,7 @@ export default function Home() {
             <Image src={homeImage} alt="" layout="fill" objectFit="cover" />
           </div>
         </div>
-        <div className="flex flex-col w-1/2 items-center bg-[#f2d054] py-10 pl-20 ">
+        <div className="flex flex-col w-1/2 items-start bg-[#f2d054] py-10 pl-20 gap-y-4">
           <p className="mb-8 font-bold text-[#291e62] text-2xl">Upload Image</p>
           <div className="border border-gray-300 rounded-lg w-[300px] h-[200px] relative">
             <img
@@ -68,7 +72,7 @@ export default function Home() {
               onChange={handleChange}
             />
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-5 mt-4">
+          <div className="flex flex-wrap items-center justify-start gap-5">
             {buttons.map((button, index) => (
               <div className="flex gap-x-2" key={index}>
                 <button
@@ -111,7 +115,7 @@ export default function Home() {
           </div>
 
           {showButtonOptions && buttons.length < 4 && (
-            <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
+            <div className="flex flex-wrap items-center justify-center gap-5">
               {buttonOptions.map((option, index) => (
                 <button
                   key={index}
@@ -131,11 +135,12 @@ export default function Home() {
           )}
 
           {showInputText && (
-            <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
+            <div className="flex flex-wrap items-center justify-center gap-5">
               <input
                 type="text"
                 placeholder="Enter input field text"
                 className="px-2 h-10 rounded-lg text-black h-full"
+                onChange={e => setInputText(e.target.value)}
               />
               <button
                 onClick={() => setShowInputText(false)}
@@ -147,7 +152,7 @@ export default function Home() {
           )}
 
           {!showButtonOptions && buttons.length < 4 && (
-            <div className=" flex mt-6 gap-x-4">
+            <div className=" flex gap-x-4">
               <button
                 className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
                 onClick={() => setShowButtonOptions(true)}
@@ -162,9 +167,17 @@ export default function Home() {
               </button>
             </div>
           )}
+          <input
+            type="text"
+            placeholder="Enter Custom Post URL"
+            className="px-2 h-10 rounded-lg text-black w-60"
+            onChange={e => setPostUrl(e.target.value)}
+          />
+          <small className="text-zinc-600 text-xs mt-1">If not provided, the data will be posted to the default</small>
           <button
             type="button"
-            className="mt-12 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
+            className=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
+            onClick={() => handleCreateFrame()}
           >
             Create Frame
           </button>
