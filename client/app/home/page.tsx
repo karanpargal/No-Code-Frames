@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import homeImage from '../../public/homeImage.jpg';
 import defaultImageIcon from '../../public/default-image-icon.jpg';
@@ -15,6 +15,8 @@ interface ButtonData {
 
 export default function Home() {
   const [file, setFile] = useState<string | undefined>(undefined);
+  const [cid, setCid] = useState('');
+  const [uploading, setUploading] = useState(false);
   const { address } = useAccount();
   const [buttons, setButtons] = useState<ButtonData[]>([]);
   const [buttonOptions, setButtonOptions] = useState<string[]>(['Post', 'Post Redirect', 'Link']);
@@ -23,9 +25,10 @@ export default function Home() {
   const [showInputText, setShowInputText] = useState<boolean>(false);
   const [showButtonOptions, setShowButtonOptions] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(URL.createObjectURL(e.target.files[0]));
+      // uploadFile(e.target.files[0]);
     }
   };
 
@@ -37,15 +40,68 @@ export default function Home() {
   };
 
   const handleCreateFrame = async () => {
-    const res = await axios.post('http://localhost:3000/api/frames/createFrame', {
-      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s',
-      buttons: buttons ? buttons : [],
-      inputText: inputText,
-      post_url: postUrl,
-      walletAddress: address,
-    });
-    console.log(res);
+    try {
+      if (!file) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      setUploading(true);
+      const fileToUpload = await fetch(file);
+      const blob = await fileToUpload.blob();
+      const formData = new FormData();
+      formData.append('file', blob);
+
+      const uploadRes = await fetch('/api/files', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!uploadRes.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      const uploadResData = await uploadRes.json();
+      console.log(`https://gateway.pinata.cloud/ipfs/${uploadResData.IpfsHash}`);
+      setCid(uploadResData.IpfsHash);
+
+      const res = await axios.post('http://localhost:3000/api/frames/createFrame', {
+        imageUrl: `https://gateway.pinata.cloud/ipfs/${uploadResData.IpfsHash}`,
+        buttons: buttons ? buttons : [],
+        inputText: inputText,
+        post_url: postUrl,
+        walletAddress: address,
+      });
+
+      console.log(res);
+      setUploading(false);
+    } catch (error) {
+      console.error('Error creating frame:', error);
+      setUploading(false);
+      alert('Failed to create frame. Please try again.');
+    }
   };
+
+  // const uploadFile = async (fileToUpload: File) => {
+  //   try {
+  //     setUploading(true);
+  //     const data = new FormData();
+  //     console.log('Started');
+  //     data.set('file', fileToUpload);
+  //     const res = await fetch('/api/files', {
+  //       method: 'POST',
+  //       body: data,
+  //     });
+  //     const resData = await res.json();
+  //     setCid(resData.IpfsHash);
+  //     console.log(resData.IpfsHash);
+  //     setUploading(false);
+  //   } catch (e) {
+  //     console.log(e);
+  //     setUploading(false);
+  //     alert('Trouble uploading file');
+  //   }
+  // };
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
@@ -74,7 +130,7 @@ export default function Home() {
                 className="relative m-0 block min-w-0 flex-auto rounded border border-solid border-gray-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
                 type="file"
                 id="formFile"
-                onChange={handleChange}
+                onChange={handleFileChange}
               />
             </span>
             <div className="flex flex-wrap items-center justify-start gap-5">
@@ -188,6 +244,9 @@ export default function Home() {
             >
               Create Frame
             </button>
+            {/* <button disabled={uploading} onClick={() => inputFile.current?.click()}>
+              {uploading ? 'Uploading...' : 'Upload'}
+            </button> */}
           </div>
         ) : (
           <div className="flex flex-col w-1/2 items-start bg-[#f2d054] py-10 pl-20 gap-y-4">
