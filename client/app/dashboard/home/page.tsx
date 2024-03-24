@@ -118,24 +118,24 @@ export default function Home() {
   // };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white ">
       <nav>
-        <div className="flex items-center justify-between p-4 bg-transparent backdrop-blur-sm">
-          <div className="flex items-center gap-4">
-            <a href="/" className="text-black hover:underline hover:underline-offset-2 text-lg font-bold">
+        <div className="flex items-center justify-between py-4 px-4 bg-transparent backdrop-blur-sm ">
+          <div className="flex items-center gap-4 ">
+            <a href="/" className="text-black hover:underline hover:underline-offset-2 text-2xl font-bold">
               Frames Creator
             </a>
           </div>
           <div className="flex items-center gap-4">
             <a
               href="/dashboard/home"
-              className="text-black hover:underline hover:underline-offset-2 text-lg font-bold hover:scale-110 transition-all duration-300"
+              className="text-black hover:underline hover:underline-offset-2 text-2xl font-bold hover:scale-110 transition-all duration-300"
             >
               Home
             </a>
             <a
               href="/dashboard/myFrames"
-              className="text-black hover:underline hover:underline-offset-2 text-lg font-bold hover:scale-110 transition-all duration-300"
+              className="text-black hover:underline hover:underline-offset-2 text-2xl font-bold hover:scale-110 transition-all duration-300"
             >
               My Frames
             </a>
@@ -143,20 +143,18 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <div className=" h-screen px-8 py-2">
-        <div className="flex justify-center items-stretch border-4 border-black rounded-sm">
-          <div className="flex-1 py-10 pl-20 border-r-2">
-            <p className="font-mono text-black text-6xl font-bold">No Code Frames</p>
-            <p className="font-mono text-black text-3xl font-normal mt-4 w-[80%]">
-              Use our platform to create frames under 1 min
-            </p>
+      <div className=" h-screen px-8 py-2  overflow-hidden ">
+        <div className="flex justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] border-4 border-black rounded-sm">
+          <div className="flex-1 py-10 pl-20 ">
+            <p className=" text-black text-6xl font-bold">No Code Frames</p>
+            <p className=" text-black text-2xl font-normal mt-4">Use our platform to create frames under 1 min</p>
             <div className="w-[400px] h-[400px] relative mt-10">
               <Image src={homeImage} alt="" layout="fill" objectFit="cover" />
             </div>
           </div>
           {address ? (
             <div className="flex flex-col w-1/2 items-start py-10 pl-20 gap-y-4 border-l-2">
-              <p className="mb-4 font-bold text-[#291e62] text-2xl">Upload Image</p>
+              <p className="mb-4 font-bold text-gray-900 text-2xl">Upload Image</p>
               <div className="border border-gray-300 rounded-lg w-[300px] h-[200px] relative">
                 <img
                   src={file || (defaultImageIcon.src as string)}
@@ -270,12 +268,10 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Enter Custom Post URL"
-                className="px-2 h-10 rounded-lg text-black w-60 border-2 border-black"
+                className="px-2 h-10 mt-2 text-black w-60 border-2 border-black"
                 onChange={e => setPostUrl(e.target.value)}
               />
-              <small className="text-zinc-600 text-xs mt-1">
-                If not provided, the data will be posted to the default
-              </small>
+              <small className="text-zinc-600 text-xs ">If not provided, the data will be posted to the default</small>
               <button
                 type="button"
                 className=" text-white bg-blue-500 hover:bg-blue-700 hover:scale-110 duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"

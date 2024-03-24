@@ -8,7 +8,7 @@ export async function createUser(user: User): Promise<any> {
     throw {
       bool: false,
       message: 'User already exists',
-      status: 400,
+      status: 200,
     };
   } else {
     try {
