@@ -29,6 +29,8 @@ export async function createFrame(frameData: FrameData): Promise<any> {
   <meta property="fc:frame:video:type" content="application/x-mpegURL" />
   <meta property="fc:frame:image" content="https://www.w3schools.com/w3images/mountains.jpg" />
   <meta property="og:image" content="https://www.w3schools.com/w3images/mountains.jpg" />
+  <meta name="fc:frame:input:text" content=${frameData.inputText}/>
+  <meta name="fc:frame:post_url" content="${frameData.postUrl}"/>
 </head>
 
 <body>
