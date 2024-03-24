@@ -1,29 +1,43 @@
 import React from 'react';
 import Link from 'next/link';
+import home from '@/app/home/page';
+import Image from 'next/image';
+import LandingImage from '../../assets/LandingImage.png';
 
 const Landingpage = (): JSX.Element => {
   return (
-    <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen">
-      <div className="flex justify-around py-6 items-center ">
-        <h1 className="text-4xl">logo</h1>
-        <Link href="/dashboard/home">
-          <button className="relative px-6 py-4 overflow-hidden font-medium text-gray-900 bg-gray-100/80 rounded-full shadow-inner group">
-            <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 group-hover:w-full ease"></span>
-            <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-400  group-hover:w-full ease"></span>
-            <span className="absolute top-0 left-0 w-full h-0 transition-all duration-400 delay-400 bg-gray-600 group-hover:h-full ease"></span>
-            <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-400 delay-400 bg-gray-600 group-hover:h-full ease"></span>
-            <span className="absolute inset-0 w-full h-full duration-400 delay-400 bg-white opacity-0 group-hover:opacity-100"></span>
-            <span className="relative transition-colors duration-400 delay-400 group-hover:text-pink-700 ease text-lg font-semibold">
-              Launch Button
-            </span>
+    <div className="bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100 h-screen">
+      <div className="flex py-6 px-24 justify-between ">
+        <h1 className="text-4xl text-gray-900 ">logo</h1>
+        <Link href="/home">
+          <button className="relative inline-block px-8 py-3 font-medium group text-xl">
+            <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+            <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+            <span className="relative text-black group-hover:text-white">Launch App</span>
           </button>
         </Link>
       </div>
 
-      <div className="flex flex-col items-center mt-16 gap-y-4 text-gray-100 font-Caudex">
-        <h1 className="text-5xl  ">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-        <p className="text-3xl font-normal text-gray-900">Lorem ipsum dolor sit amet, consectetur adipiscing elite</p>
-        <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elite</p>
+      <div className="flex justify-between px-20 items-center m-auto mt-28 text-gray-900   ">
+        <div className="flex flex-col gap-y-6  w-max">
+          <h1 className="text-5xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+          <p className="text-3xl font-normal text-emrald-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elite
+          </p>
+          <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elite</p>
+          <Link href="/home">
+            <button className="relative inline-block px-4 py-2 font-medium group">
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+              <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+              <span className="relative text-black group-hover:text-white">Launch App</span>
+            </button>
+          </Link>
+        </div>
+        <div className="bg-{L}"></div>
+
+        <div className="w-2/3">
+          <Image src={LandingImage} alt="" />
+        </div>
       </div>
     </div>
   );
