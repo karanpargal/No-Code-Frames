@@ -116,7 +116,7 @@ export default function Home() {
         <div className="flex items-center justify-between py-4 px-4 bg-transparent backdrop-blur-sm ">
           <div className="flex items-center gap-4 ">
             <a href="/" className="text-black hover:underline hover:underline-offset-2 text-2xl font-bold">
-              Frames Creator
+              No Code Frames
             </a>
           </div>
           <div className="flex items-center gap-4">
@@ -140,9 +140,7 @@ export default function Home() {
         <div className="flex justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] border-4 border-black rounded-sm">
           <div className="flex-1 py-10 pl-20 ">
             <p className=" text-black text-6xl font-bold">No Code Frames</p>
-            <p className=" text-black text-2xl font-normal mt-4">
-              Use our platform to create frames under 1 min
-            </p>
+            <p className=" text-black text-2xl font-normal mt-4">Use our platform to create frames under 1 min</p>
             <div className="w-[400px] h-[400px] relative mt-10">
               <Image src={homeImage} alt="" layout="fill" objectFit="cover" />
             </div>
@@ -212,7 +210,7 @@ export default function Home() {
                   {buttonOptions.map((option, index) => (
                     <button
                       key={index}
-                      className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      className="text-black bg-white hover:text-white hover:bg-black transition-all border-2 border-black duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium text-sm px-5 py-2.5 text-center me-2 mb-2"
                       onClick={() => addNewButton({ label: option, action: option })}
                     >
                       {option}
@@ -265,9 +263,7 @@ export default function Home() {
                 className="px-2 h-10 mt-2 text-black w-60 border-2 border-black"
                 onChange={e => setPostUrl(e.target.value)}
               />
-              <small className="text-zinc-600 text-xs ">
-                If not provided, the data will be posted to the default
-              </small>
+              <small className="text-zinc-600 text-xs ">If not provided, the data will be posted to the default</small>
 
               <button className="relative inline-block px-4 py-2 font-medium group" onClick={() => handleCreateFrame()}>
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
