@@ -57,7 +57,7 @@ export default function MyFrames() {
             <h2 className="text-xl font-semibold mb-2">Frame</h2>
             <p className="mb-4">{frame.frame}</p>
             <a
-              href={`http://localhost:3010/?url=http://localhost:3000/api/frames/fetchFrame/${frame._id}`}
+              href={`http://localhost:3001/?url=http://localhost:3000/api/frames/fetchFrame/${frame._id}`}
               target="_blank"
               className="bg-blue-500 px-4 py-2 rounded-md text-white mt-2"
             >
