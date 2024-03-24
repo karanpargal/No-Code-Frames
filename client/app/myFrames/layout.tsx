@@ -1,3 +1,4 @@
+// layout.tsx
 'use client';
 
 import '@rainbow-me/rainbowkit/styles.css';
@@ -6,8 +7,7 @@ import { WagmiProvider, http } from 'wagmi';
 import { mainnet, base } from 'wagmi/chains';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
 
 const projectId = '6c0866f9cef23a851c18c1cedf0c5a2d';
 
@@ -28,15 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ToastContainer />
-        <WagmiProvider config={config}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>{children}</RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
-      </body>
-    </html>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>{children}</RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }
