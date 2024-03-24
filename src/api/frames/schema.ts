@@ -19,5 +19,10 @@ const renderFrame = {
   walletAddress: yup.string().required(),
 };
 
+const renderUserFrames = {
+  walletAddress: yup.string().required(),
+};
+
 export const createFrameSchema = new yup.ObjectSchema(createFrame);
 export const renderFrameSchema = new yup.ObjectSchema(renderFrame);
+export const renderUserFramesSchema = new yup.ObjectSchema(renderUserFrames);

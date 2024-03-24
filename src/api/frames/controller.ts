@@ -151,3 +151,40 @@ export async function renderFrame(renderFrame: RenderFrame): Promise<any> {
     };
   }
 }
+
+export async function renderUserFrame(walletAddress: string): Promise<any> {
+  try {
+    console.log(walletAddress);
+    const address = walletAddress.trim();
+    const user = await (await database()).collection('users').findOne({ walletAddress: address });
+
+    if (!user) {
+      throw {
+        status: 404,
+        message: 'User not found',
+      };
+    }
+
+    const frameIds = user.frames.map(frame => frame.insertedId);
+
+    const allFrames = await (
+      await database()
+    )
+      .collection('frames')
+      .find({ _id: { $in: frameIds } })
+      .toArray();
+
+    return {
+      bool: true,
+      message: 'Success',
+      data: allFrames,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      bool: false,
+      message: 'Frames could not be rendered',
+      status: 400,
+    };
+  }
+}
