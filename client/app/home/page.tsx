@@ -42,7 +42,7 @@ export default function Home() {
       buttons: buttons ? buttons : [],
       inputText: inputText,
       post_url: postUrl,
-      walletAddress: '0xAcEf0600cF20d5236111cCeE4Ce54013C9123e62',
+      walletAddress: address,
     });
     console.log(res);
   };
