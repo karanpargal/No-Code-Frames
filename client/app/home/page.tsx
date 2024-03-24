@@ -4,10 +4,17 @@ import Image from 'next/image';
 import homeImage from '../../public/homeImage.jpg';
 import defaultImageIcon from '../../public/default-image-icon.jpg';
 
+interface ButtonData {
+  label: string;
+  action: string;
+  target?: string;
+}
+
 export default function Home() {
   const [file, setFile] = useState<string | undefined>(undefined);
-  const [buttons, setButtons] = useState<string[]>([]);
+  const [buttons, setButtons] = useState<ButtonData[]>([]);
   const [buttonOptions, setButtonOptions] = useState<string[]>(['Post', 'Post Redirect', 'Link']);
+  const [showInputText, setShowInputText] = useState<boolean>(false);
   const [showButtonOptions, setShowButtonOptions] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,18 +23,28 @@ export default function Home() {
     }
   };
 
-  const addNewButton = (option: string) => {
+  const addNewButton = (data: ButtonData) => {
     if (buttons.length < 4) {
-      setButtons([...buttons, option]);
+      setButtons([...buttons, data]);
       setShowButtonOptions(false);
     }
+  };
+
+  const handleCreateFrame = () => {
+    const framesButton = buttons.map(button => {
+      return {
+        label: button,
+        action: 'POST',
+        target: 'https://www.google.com',
+      };
+    });
   };
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
       <div className="flex items-stretch justify-center">
         <div className="flex-1 bg-[#fdf3ea] py-10 pl-20">
-          <p className="font-mono text-[#291e62] text-6xl font-bold">LET'S START </p>
+          <p className="font-mono text-[#291e62] text-6xl font-bold">LET&apos;S START </p>
           <p className="font-mono text-[#291e62] text-6xl font-bold">CREATING FRAMES</p>
           <p className="font-mono text-[#291e62] text-3xl font-normal mt-14">How about creating a frame?</p>
           <div className="w-[600px] h-[400px] relative mt-10">
@@ -43,16 +60,6 @@ export default function Home() {
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-5 mt-4">
-            {buttons.map((button, index) => (
-              <button
-                key={index}
-                className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-              >
-                {button}
-              </button>
-            ))}
-          </div>
           <span className="pt-10">
             <input
               className="relative m-0 block min-w-0 flex-auto rounded border border-solid border-gray-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
@@ -61,6 +68,47 @@ export default function Home() {
               onChange={handleChange}
             />
           </span>
+          <div className="flex flex-wrap items-center justify-center gap-5 mt-4">
+            {buttons.map((button, index) => (
+              <div className="flex gap-x-2" key={index}>
+                <button
+                  key={index}
+                  onClick={() => setButtons(buttons.filter((_, i) => i !== index))}
+                  className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                >
+                  {button.action.toUpperCase()}
+                </button>
+                <input
+                  type="text"
+                  placeholder="Enter label"
+                  className="px-2 h-10 rounded-lg text-black"
+                  onChange={e => {
+                    const newButtons = [...buttons];
+                    newButtons[index].label = e.target.value;
+                    setButtons(newButtons);
+                  }}
+                />
+                <input
+                  type="text"
+                  placeholder={button.action === 'Link' ? 'Enter Link' : 'Enter POST URL'}
+                  className="px-2 h-10 rounded-lg text-black"
+                  onChange={
+                    button.action === 'link'
+                      ? e => {
+                          const newButtons = [...buttons];
+                          newButtons[index].target = e.target.value;
+                          setButtons(newButtons);
+                        }
+                      : e => {
+                          const newButtons = [...buttons];
+                          newButtons[index].action = e.target.value;
+                          setButtons(newButtons);
+                        }
+                  }
+                />
+              </div>
+            ))}
+          </div>
 
           {showButtonOptions && buttons.length < 4 && (
             <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
@@ -68,26 +116,55 @@ export default function Home() {
                 <button
                   key={index}
                   className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  onClick={() => addNewButton(option)}
+                  onClick={() => addNewButton({ label: option, action: option })}
                 >
                   {option}
                 </button>
               ))}
+              <button
+                onClick={() => setShowButtonOptions(false)}
+                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Cancel
+              </button>
             </div>
           )}
+
+          {showInputText && (
+            <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
+              <input
+                type="text"
+                placeholder="Enter input field text"
+                className="px-2 h-10 rounded-lg text-black h-full"
+              />
+              <button
+                onClick={() => setShowInputText(false)}
+                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4  focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
           {!showButtonOptions && buttons.length < 4 && (
-            <div className="mt-10">
+            <div className=" flex mt-6 gap-x-4">
               <button
                 className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
                 onClick={() => setShowButtonOptions(true)}
               >
                 Add button to frame
               </button>
+              <button
+                className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
+                onClick={() => setShowInputText(true)}
+              >
+                Add Input to frame
+              </button>
             </div>
           )}
           <button
             type="button"
-            className="mt-20 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
+            className="mt-12 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-bold rounded-lg text-lg px-5 py-2.5 text-center me-2"
           >
             Create Frame
           </button>
