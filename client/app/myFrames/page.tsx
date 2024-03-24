@@ -41,7 +41,14 @@ export default function MyFrames() {
         {frames.map((frame: any) => (
           <div key={frame._id} className="bg-white rounded-lg shadow-md p-4 text-black">
             <h2 className="text-xl font-semibold mb-2">Frame</h2>
-            <p>{frame.frame}</p>
+            <p className="mb-4">{frame.frame}</p>
+            <a
+              href={`http://localhost:3010/?url=http://localhost:3000/api/frames/fetchFrame/${frame._id}`}
+              target="_blank"
+              className="bg-blue-500 px-4 py-2 rounded-md text-white mt-2"
+            >
+              View Frame
+            </a>
           </div>
         ))}
       </div>
