@@ -36,6 +36,17 @@ export default function MyFrames() {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 mb-4 cursor-pointer"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        onClick={() => window.history.back()}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+
       <h1 className="text-white text-center text-4xl mb-8">My Frames</h1>
       <div className="grid grid-cols-3 gap-4">
         {frames.map((frame: any) => (
