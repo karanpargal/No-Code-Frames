@@ -1,9 +1,12 @@
-// MyFrames.tsx
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 
 export default function MyFrames() {
   const [frames, setFrames] = useState<any[]>([]);
+  const { address } = useAccount();
+
+  console.log(address);
 
   useEffect(() => {
     const fetchFrames = async () => {
@@ -13,7 +16,7 @@ export default function MyFrames() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ walletAddress: '0xAcEf0600cF20d5236111cCeE4Ce54013C9123e62' }),
+          body: JSON.stringify({ walletAddress: address }),
         });
 
         if (!response.ok) {
@@ -32,7 +35,7 @@ export default function MyFrames() {
     };
 
     fetchFrames();
-  }, []);
+  }, [address]);
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
