@@ -215,3 +215,42 @@ export const fetchFrame = async (frameId: string): Promise<any> => {
     };
   }
 };
+
+export async function deleteFrame(frameId: string): Promise<any> {
+  try {
+    const frame = await (await database()).collection('frames').deleteOne({ _id: new ObjectId(frameId) });
+
+    if (!frame) {
+      throw {
+        status: 404,
+        message: 'Frame not found',
+      };
+    }
+
+    const user = await (await database()).collection('users').findOne({ frames: { $in: [new ObjectId(frameId)] } });
+
+    if (!user) {
+      throw {
+        status: 404,
+        message: 'User not found',
+      };
+    }
+
+    const newFrames = user.frames.filter(frame => frame !== frameId);
+
+    await (await database()).collection('users').updateOne({ _id: user._id }, { $set: { frames: newFrames } });
+
+    return {
+      bool: true,
+      message: 'Success',
+      data: frame,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      bool: false,
+      message: 'Frame could not be deleted',
+      status: 400,
+    };
+  }
+}

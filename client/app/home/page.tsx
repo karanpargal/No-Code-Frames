@@ -6,6 +6,7 @@ import defaultImageIcon from '../../public/default-image-icon.jpg';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { toast } from 'react-toastify';
 
 interface ButtonData {
   label: string;
@@ -44,7 +45,11 @@ export default function Home() {
       post_url: postUrl,
       walletAddress: address,
     });
-    console.log(res);
+    if (res.status === 201) {
+      toast.success('Frame created successfully');
+    } else {
+      toast.error('Failed to create frame');
+    }
   };
 
   return (
