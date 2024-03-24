@@ -25,11 +25,7 @@ export async function createFrame(frameData: FrameData): Promise<any> {
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
   <meta property="fc:frame" content="vNext" />
   <meta property="fc:frame:video"
-<<<<<<< HEAD
-    content="${livepeerStream.object.asset.playbackUrl}" />
-=======
     content="https://vod-cdn.lp-playback.studio/raw/jxf4iblf6wlsyor6526t4tcmtmqa/catalyst-vod-com/hls/4145muyrb6c3p4ur/index.m3u8" />
->>>>>>> 28de69737c4b6b2615235d33c8cb9cc0237f3cf2
   <meta property="fc:frame:video:type" content="application/x-mpegURL" />
   <meta property="fc:frame:image" content="https://www.w3schools.com/w3images/mountains.jpg" />
   <meta property="og:image" content="https://www.w3schools.com/w3images/mountains.jpg" />
@@ -81,11 +77,7 @@ export async function createFrame(frameData: FrameData): Promise<any> {
         bool: true,
         message: 'Success, Frame created.',
         status: 200,
-<<<<<<< HEAD
-        data: frameHtml,
-=======
         data: frames,
->>>>>>> 28de69737c4b6b2615235d33c8cb9cc0237f3cf2
       };
     }
     const frame: Frame = {
