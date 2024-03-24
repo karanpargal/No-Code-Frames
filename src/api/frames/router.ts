@@ -49,6 +49,6 @@ async function handleRenderFrame(req: Request, res: Response) {
 
 framesRouter.post('/createFrame', createFrameValidator, handleCreateFrame);
 
-framesRouter.get('/renderFrame', renderFrameValidator, handleRenderFrame);
+framesRouter.post('/renderFrame', renderFrameValidator, handleRenderFrame);
 
 export default framesRouter;

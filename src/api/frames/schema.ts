@@ -11,10 +11,12 @@ const createFrame = {
     }),
   ),
   inputText: yup.string(),
+  walletAddress: yup.string().required(),
 };
 
 const renderFrame = {
   frameId: yup.string().required(),
+  walletAddress: yup.string().required(),
 };
 
 export const createFrameSchema = new yup.ObjectSchema(createFrame);

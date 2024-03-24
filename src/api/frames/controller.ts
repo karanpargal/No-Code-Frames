@@ -16,6 +16,24 @@ export async function createFrame(frameData: FrameData): Promise<any> {
 
     const frameHtml = getFrameHtml(frame);
 
+    const frames = await (await database()).collection('frames').insertOne({
+      frame: frameHtml,
+    });
+
+    const user = await (await database()).collection('users').findOne({ walletAddress: frameData.walletAddress });
+    if (!user) {
+      throw {
+        message: 'User not found',
+        status: 404,
+      };
+    }
+
+    let newFrames = [];
+    newFrames = user.frames;
+    newFrames.push(frames);
+
+    await (await database()).collection('users').updateOne({ _id: user._id }, { $set: { frames: newFrames } });
+
     return {
       bool: true,
       message: 'Success, Frame created.',
@@ -35,19 +53,24 @@ export async function createFrame(frameData: FrameData): Promise<any> {
 export async function renderFrame(renderFrame: RenderFrame): Promise<any> {
   try {
     const frameId = renderFrame.frameId;
-    const frameHtml = await (await database()).collection('frames').findOne({ _id: frameId });
+    console.log(frameId);
+    const projection = { frame: 1, _id: 1 };
+    const allFrames = await (await database()).collection('frames').find({}).toArray();
+    const frameHtml = await (await database()).collection('frames').findOne({ _id: frameId }, { projection });
 
-    if (!frameHtml) {
-      throw {
-        status: 404,
-        message: 'Frame not found',
-      };
-    }
+    console.log(frameHtml);
+
+    // if (!frameHtml) {
+    //   throw {
+    //     status: 404,
+    //     message: 'Frame not found',
+    //   };
+    // }
 
     return {
       bool: true,
       message: 'Success',
-      data: frameHtml,
+      data: allFrames,
     };
   } catch (e) {
     LoggerInstance.error(e);

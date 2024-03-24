@@ -4,6 +4,7 @@ export interface FrameData {
   buttons: Button[];
   inputText: string;
   postUrl: string;
+  walletAddress: string;
 }
 
 interface Button {
