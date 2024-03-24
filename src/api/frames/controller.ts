@@ -2,6 +2,7 @@ import { Frame, FrameButtonsType, getFrameHtml } from 'frames.js';
 import database from '../../loaders/database';
 import LoggerInstance from '../../loaders/logger';
 import { FrameData, RenderFrame } from './model';
+import { ObjectId } from 'mongodb';
 
 export async function createFrame(frameData: FrameData): Promise<any> {
   try {
@@ -54,23 +55,20 @@ export async function renderFrame(renderFrame: RenderFrame): Promise<any> {
   try {
     const frameId = renderFrame.frameId;
     console.log(frameId);
-    const projection = { frame: 1, _id: 1 };
-    const allFrames = await (await database()).collection('frames').find({}).toArray();
-    const frameHtml = await (await database()).collection('frames').findOne({ _id: frameId }, { projection });
 
-    console.log(frameHtml);
+    const frameHtml = await (await database()).collection('frames').findOne({ _id: new ObjectId(frameId) });
 
-    // if (!frameHtml) {
-    //   throw {
-    //     status: 404,
-    //     message: 'Frame not found',
-    //   };
-    // }
+    if (!frameHtml) {
+      throw {
+        status: 404,
+        message: 'Frame not found',
+      };
+    }
 
     return {
       bool: true,
       message: 'Success',
-      data: allFrames,
+      data: frameHtml,
     };
   } catch (e) {
     LoggerInstance.error(e);
