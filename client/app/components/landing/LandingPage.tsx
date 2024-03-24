@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import home from '@/app/home/page';
+import home from '@/app/dashboard/page';
 
 const Landingpage = (): JSX.Element => {
   return (
     <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen">
       <div className="flex justify-around py-6 items-center ">
         <h1 className="text-4xl">logo</h1>
-        <Link href="/home">
+        <Link href="/dashboard">
           <button className="relative px-6 py-4 overflow-hidden font-medium text-gray-900 bg-gray-100/80 rounded-full shadow-inner group">
             <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 group-hover:w-full ease"></span>
             <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-400  group-hover:w-full ease"></span>
