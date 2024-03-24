@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white h-screen p-8">
+    <div className="bg-gradient-to-b from-gray-900 via-pink-700 to-white p-8">
       <div className="flex justify-center items-stretch">
         <div className="flex-1 bg-[#fdf3ea] py-10 pl-20">
           <p className="font-mono text-[#291e62] text-6xl font-bold">LET&apos;S START </p>
