@@ -1,6 +1,5 @@
-// Import necessary modules and components
+'use client';
 import React from 'react';
-import MyFrames from './myFrames'; // Import the new page component
 import '@rainbow-me/rainbowkit/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
@@ -34,10 +33,7 @@ export default function RootLayout({
         <ToastContainer />
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
-              <MyFrames />
-              {children}
-            </RainbowKitProvider>
+            <RainbowKitProvider>{children}</RainbowKitProvider>
           </QueryClientProvider>
         </WagmiProvider>
       </body>
