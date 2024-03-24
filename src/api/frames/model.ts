@@ -1,0 +1,17 @@
+export interface FrameData {
+  imageUrl: string;
+  videoUrl: string;
+  buttons: Button[];
+  inputText: string;
+  postUrl: string;
+}
+
+interface Button {
+  action?: string;
+  target?: string;
+  label: string;
+}
+
+export interface RenderFrame {
+  frameId: string;
+}
