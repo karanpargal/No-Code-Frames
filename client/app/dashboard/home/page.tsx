@@ -28,8 +28,14 @@ export default function Home() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(URL.createObjectURL(e.target.files[0]));
-      // uploadFile(e.target.files[0]);
+      const fileType = e.target.files[0].type;
+      if (fileType.startsWith('image')) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+      } else if (fileType.startsWith('video')) {
+        setFile(undefined); // Clear the file state
+      } else {
+        alert('Unsupported file type. Please upload an image or a video.');
+      }
     }
   };
 
@@ -237,23 +243,22 @@ export default function Home() {
                   </button>
                 </div>
               )}
-
-              {!showButtonOptions && buttons.length < 4 && (
-                <div className=" flex gap-x-4">
+              <div className=" flex gap-x-4">
+                {!showButtonOptions && buttons.length < 4 && file && (
                   <button
                     className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
                     onClick={() => setShowButtonOptions(true)}
                   >
                     Add button to frame
                   </button>
-                  <button
-                    className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
-                    onClick={() => setShowInputText(true)}
-                  >
-                    Add Input to frame
-                  </button>
-                </div>
-              )}
+                )}
+                <button
+                  className="text-white bg-black hover:scale-110 transition-all duration-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-lg px-5 py-2.5 text-center"
+                  onClick={() => setShowInputText(true)}
+                >
+                  Add Input to frame
+                </button>
+              </div>
               <input
                 type="text"
                 placeholder="Enter Custom Post URL"
