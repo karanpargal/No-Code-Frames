@@ -20,6 +20,10 @@
   "dependencies": {
     "@livepeer/react": "^4.1.11",
     "@xmtp/frames-validator": "^0.5.2",
+<<<<<<< HEAD
+=======
+    "axios": "^1.6.8",
+>>>>>>> 6b293230a252a30a1adf78fbe8ee1170fade6323
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
