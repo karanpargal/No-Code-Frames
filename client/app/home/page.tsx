@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import homeImage from '../../public/homeImage.jpg';
 import defaultImageIcon from '../../public/default-image-icon.jpg';
