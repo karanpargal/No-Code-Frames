@@ -156,7 +156,6 @@ export async function renderFrame(renderFrame: RenderFrame): Promise<any> {
 
 export async function renderUserFrame(walletAddress: string): Promise<any> {
   try {
-    console.log(walletAddress);
     const address = walletAddress.trim();
     const user = await (await database()).collection('users').findOne({ walletAddress: address });
 
@@ -190,3 +189,29 @@ export async function renderUserFrame(walletAddress: string): Promise<any> {
     };
   }
 }
+
+export const fetchFrame = async (frameId: string): Promise<any> => {
+  try {
+    const frame = await (await database()).collection('frames').findOne({ _id: new ObjectId(frameId) });
+
+    if (!frame) {
+      throw {
+        status: 404,
+        message: 'Frame not found',
+      };
+    }
+
+    return {
+      bool: true,
+      message: 'Success',
+      data: frame,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      bool: false,
+      message: 'Frame could not be fetched',
+      status: 400,
+    };
+  }
+};
