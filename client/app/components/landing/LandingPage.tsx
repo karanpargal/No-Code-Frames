@@ -23,7 +23,7 @@ const Landingpage = (): JSX.Element => {
     <div className="bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100">
       <section className="h-screen">
         <div className="flex py-6 px-24 justify-between ">
-          <h1 className="text-4xl text-gray-900 ">logo</h1>
+          <h1 className="text-4xl text-gray-900 font-bold">No Code Frames</h1>
           <Link href="/dashboard/home">
             <button className="relative inline-block px-8 py-3 font-medium group text-xl">
               <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
@@ -58,15 +58,15 @@ const Landingpage = (): JSX.Element => {
 
       <section className="">
         <div className="flex flex-col gap-4 justify-center items-center pb-20">
-          <p className="text-4xl font-bold text-black mb-8">Meet the features of the app</p>
-          <div className="grid grid-cols-3 gap-4 justify-center items-center w-4/5 m-auto h-max">
+          <p className="text-4xl font-bold text-black mb-8">FEATURES</p>
+          <div className="grid grid-cols-3 gap-8 justify-center items-center px-20 m-auto h-max ">
             {features.map(feature => (
               <div
-                className="flex flex-col gap-4 justify-center items-center border-2 border-black py-6 px-4 h-full"
+                className="flex flex-col gap-x-6 justify-center items-center border-2 border-black py-6 mx-4 h-full shadow-[5px_5px_0px_0px_rgba(0,0,0)]"
                 key={Math.random()}
               >
-                <h1 className="text-3xl font-bold text-black text-center">{feature.title}</h1>
-                <p className="text-md text-center text-zinc-600">{feature.description}</p>
+                <h1 className="text-2xl font-bold text-black text-center text-balance ">{feature.title}</h1>
+                <p className="text-md text-center text-zinc-700 mt-2 text-balance">{feature.description}</p>
               </div>
             ))}
           </div>
