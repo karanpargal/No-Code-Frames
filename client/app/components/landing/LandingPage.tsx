@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import home from '@/app/home/page';
 import Image from 'next/image';
 import LandingImage from '../../assets/LandingImage.png';
 
@@ -9,7 +8,7 @@ const Landingpage = (): JSX.Element => {
     <div className="bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100 h-screen">
       <div className="flex py-6 px-24 justify-between ">
         <h1 className="text-4xl text-gray-900 ">logo</h1>
-        <Link href="/home">
+        <Link href="/dashboard/home">
           <button className="relative inline-block px-8 py-3 font-medium group text-xl">
             <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
             <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
@@ -25,7 +24,7 @@ const Landingpage = (): JSX.Element => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elite
           </p>
           <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elite</p>
-          <Link href="/home">
+          <Link href="/dashboard/home">
             <button className="relative inline-block px-4 py-2 font-medium group">
               <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
               <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
